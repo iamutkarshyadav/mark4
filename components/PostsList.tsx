@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import { safeFetch } from "@/lib/fetch-utils";
 import type { Post as DbPost } from "@/lib/types";
 import type { User } from "@supabase/supabase-js";
 
