@@ -9,6 +9,9 @@ import CreatePost from "./CreatePost";
 import SearchComponent from "./SearchComponent";
 import ProfileSection from "./ProfileSection";
 import SocialFeatures from "./SocialFeatures";
+import NotificationsComponent from "./NotificationsComponent";
+import AdminPanel from "./AdminPanel";
+import ErrorBoundary from "./ErrorBoundary";
 
 interface Props {
   user: User;
@@ -27,7 +30,7 @@ interface UserProfile {
 export default function Dashboard({ user }: Props) {
   const { signOut } = useAuth();
   const [activeTab, setActiveTab] = useState<
-    "feed" | "search" | "profile" | "social"
+    "feed" | "search" | "profile" | "social" | "notifications" | "admin"
   >("feed");
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -211,6 +214,17 @@ export default function Dashboard({ user }: Props) {
                 👥 <span className="ml-1 hidden sm:inline">Social</span>
               </button>
               <button
+                onClick={() => setActiveTab("notifications")}
+                className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                  activeTab === "notifications"
+                    ? "bg-white text-gray-900 shadow"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+                title="Notifications"
+              >
+                🔔 <span className="ml-1 hidden sm:inline">Notifications</span>
+              </button>
+              <button
                 onClick={() => setActiveTab("profile")}
                 className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
                   activeTab === "profile"
@@ -221,6 +235,19 @@ export default function Dashboard({ user }: Props) {
               >
                 ⚙️ <span className="ml-1 hidden sm:inline">Profile</span>
               </button>
+              {userProfile?.role === "admin" && (
+                <button
+                  onClick={() => setActiveTab("admin")}
+                  className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                    activeTab === "admin"
+                      ? "bg-white text-gray-900 shadow"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                  title="Admin"
+                >
+                  👑 <span className="ml-1 hidden sm:inline">Admin</span>
+                </button>
+              )}
             </div>
           </nav>
         </div>
@@ -237,9 +264,16 @@ export default function Dashboard({ user }: Props) {
                   setRefreshKey((k) => k + 1);
                 }}
               />
-              <PostsList type="feed" user={user} refreshKey={refreshKey} />
+              <ErrorBoundary>
+                <PostsList type="feed" user={user} refreshKey={refreshKey} />
+              </ErrorBoundary>
             </div>
             <div className="space-y-6">
+              <ErrorBoundary>
+                <div className="bg-white rounded-xl shadow border border-gray-100 max-h-72 overflow-hidden">
+                  <NotificationsComponent user={user} />
+                </div>
+              </ErrorBoundary>
               <div className="bg-white rounded-xl shadow p-6 border border-gray-100">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold text-gray-900">Quick Stats</h3>
@@ -325,6 +359,34 @@ export default function Dashboard({ user }: Props) {
         {activeTab === "search" && <SearchComponent user={user} />}
 
         {activeTab === "social" && <SocialFeatures user={user} />}
+
+        {activeTab === "notifications" && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <NotificationsComponent user={user} />
+            </div>
+            <div className="space-y-6">
+              <div className="bg-white rounded-xl shadow p-6 border border-gray-100">
+                <h3 className="font-semibold text-gray-900 mb-4">About Notifications</h3>
+                <div className="text-sm text-gray-600 space-y-2">
+                  <p>🔔 Get real-time notifications for:</p>
+                  <ul className="list-disc list-inside space-y-1 ml-2">
+                    <li>New followers</li>
+                    <li>Likes on your posts</li>
+                    <li>Comments on your posts</li>
+                  </ul>
+                  <p className="mt-3 text-xs text-gray-500">
+                    Notifications update in real-time using Supabase subscriptions.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "admin" && userProfile?.role === "admin" && (
+          <AdminPanel user={user} />
+        )}
 
         {activeTab === "profile" && userProfile && (
           <ProfileSection
