@@ -213,6 +213,17 @@ export default function Dashboard({ user }: Props) {
                 👥 <span className="ml-1 hidden sm:inline">Social</span>
               </button>
               <button
+                onClick={() => setActiveTab("notifications")}
+                className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                  activeTab === "notifications"
+                    ? "bg-white text-gray-900 shadow"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+                title="Notifications"
+              >
+                🔔 <span className="ml-1 hidden sm:inline">Notifications</span>
+              </button>
+              <button
                 onClick={() => setActiveTab("profile")}
                 className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
                   activeTab === "profile"
@@ -223,6 +234,19 @@ export default function Dashboard({ user }: Props) {
               >
                 ⚙️ <span className="ml-1 hidden sm:inline">Profile</span>
               </button>
+              {userProfile?.role === "admin" && (
+                <button
+                  onClick={() => setActiveTab("admin")}
+                  className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                    activeTab === "admin"
+                      ? "bg-white text-gray-900 shadow"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                  title="Admin"
+                >
+                  👑 <span className="ml-1 hidden sm:inline">Admin</span>
+                </button>
+              )}
             </div>
           </nav>
         </div>
