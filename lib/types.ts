@@ -43,3 +43,23 @@ export interface SearchUsersParams {
 export interface SearchPostsParams {
   query: string;
 }
+
+export interface Notification {
+  id: string;
+  recipient_id: string;
+  sender_id: string;
+  notification_type: "follow" | "like" | "comment";
+  post_id?: string;
+  message: string;
+  is_read: boolean;
+  created_at: string;
+  sender?: UserProfile;
+  post?: Post;
+}
+
+export interface Like {
+  id: string;
+  user_id: string;
+  post_id: string;
+  created_at: string;
+}
