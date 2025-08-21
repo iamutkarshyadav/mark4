@@ -9,6 +9,8 @@ import CreatePost from "./CreatePost";
 import SearchComponent from "./SearchComponent";
 import ProfileSection from "./ProfileSection";
 import SocialFeatures from "./SocialFeatures";
+import NotificationsComponent from "./NotificationsComponent";
+import AdminPanel from "./AdminPanel";
 
 interface Props {
   user: User;
