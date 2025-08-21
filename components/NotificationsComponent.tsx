@@ -80,18 +80,25 @@ export default function NotificationsComponent({ user }: Props) {
   }, [user.id]);
 
   const fetchNotifications = async () => {
+    setLoading(true);
+    setFetchError(null);
+
     try {
       const { data, error } = await safeFetch('/api/notifications');
 
       if (error) {
         console.error('Error fetching notifications:', error);
+        setFetchError(error);
         setNotifications([]);
       } else {
         setNotifications(data.notifications || []);
         setUnreadCount((data.notifications || []).filter((n: Notification) => !n.is_read).length);
+        setLastFetch(new Date());
+        setFetchError(null);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Unexpected error fetching notifications:', error);
+      setFetchError(error.message || 'Unexpected error');
       setNotifications([]);
     } finally {
       setLoading(false);
