@@ -35,8 +35,8 @@ export default function NotificationsComponent({ user }: Props) {
 
   useEffect(() => {
     fetchNotifications();
-    
-    // Set up real-time subscription
+
+    // Set up real-time subscription with error handling
     const channel = supabase
       .channel('notifications')
       .on(
@@ -48,17 +48,30 @@ export default function NotificationsComponent({ user }: Props) {
           filter: `recipient_id=eq.${user.id}`
         },
         (payload) => {
-          console.log('New notification received:', payload);
-          // Add new notification to the list
-          const newNotification = payload.new as Notification;
-          setNotifications(prev => [newNotification, ...prev]);
-          setUnreadCount(prev => prev + 1);
+          try {
+            console.log('New notification received:', payload);
+            // Add new notification to the list
+            const newNotification = payload.new as Notification;
+            setNotifications(prev => [newNotification, ...prev]);
+            setUnreadCount(prev => prev + 1);
+          } catch (error) {
+            console.error('Error processing real-time notification:', error);
+          }
         }
       )
-      .subscribe();
+      .subscribe((status, err) => {
+        if (err) {
+          console.error('Subscription error:', err);
+        }
+        console.log('Subscription status:', status);
+      });
 
     return () => {
-      supabase.removeChannel(channel);
+      try {
+        supabase.removeChannel(channel);
+      } catch (error) {
+        console.error('Error removing channel:', error);
+      }
     };
   }, [user.id]);
 
