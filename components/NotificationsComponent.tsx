@@ -34,6 +34,8 @@ export default function NotificationsComponent({ user }: Props) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [lastFetch, setLastFetch] = useState<Date | null>(null);
 
   useEffect(() => {
     fetchNotifications();
