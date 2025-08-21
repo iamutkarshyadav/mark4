@@ -264,7 +264,9 @@ export default function Dashboard({ user }: Props) {
                   setRefreshKey((k) => k + 1);
                 }}
               />
-              <PostsList type="feed" user={user} refreshKey={refreshKey} />
+              <ErrorBoundary>
+                <PostsList type="feed" user={user} refreshKey={refreshKey} />
+              </ErrorBoundary>
             </div>
             <div className="space-y-6">
               <ErrorBoundary>
