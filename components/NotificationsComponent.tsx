@@ -76,38 +76,20 @@ export default function NotificationsComponent({ user }: Props) {
     };
   }, [user.id]);
 
-  const fetchNotifications = async (retryCount = 0) => {
+  const fetchNotifications = async () => {
     try {
-      const { data: session } = await supabase.auth.getSession();
-      if (!session.session) {
-        setLoading(false);
-        return;
-      }
+      const { data, error } = await safeFetch('/api/notifications');
 
-      const response = await fetch('/api/notifications', {
-        headers: {
-          'Authorization': `Bearer ${session.session.access_token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
+      if (error) {
+        console.error('Error fetching notifications:', error);
+        setNotifications([]);
+      } else {
         setNotifications(data.notifications || []);
         setUnreadCount((data.notifications || []).filter((n: Notification) => !n.is_read).length);
-      } else {
-        console.error('Failed to fetch notifications:', response.status, response.statusText);
-        if (retryCount < 2) {
-          setTimeout(() => fetchNotifications(retryCount + 1), 1000);
-          return;
-        }
       }
     } catch (error) {
-      console.error('Error fetching notifications:', error);
-      if (retryCount < 2) {
-        setTimeout(() => fetchNotifications(retryCount + 1), 1000);
-        return;
-      }
+      console.error('Unexpected error fetching notifications:', error);
+      setNotifications([]);
     } finally {
       setLoading(false);
     }
