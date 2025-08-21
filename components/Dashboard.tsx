@@ -352,6 +352,34 @@ export default function Dashboard({ user }: Props) {
 
         {activeTab === "social" && <SocialFeatures user={user} />}
 
+        {activeTab === "notifications" && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <NotificationsComponent user={user} />
+            </div>
+            <div className="space-y-6">
+              <div className="bg-white rounded-xl shadow p-6 border border-gray-100">
+                <h3 className="font-semibold text-gray-900 mb-4">About Notifications</h3>
+                <div className="text-sm text-gray-600 space-y-2">
+                  <p>🔔 Get real-time notifications for:</p>
+                  <ul className="list-disc list-inside space-y-1 ml-2">
+                    <li>New followers</li>
+                    <li>Likes on your posts</li>
+                    <li>Comments on your posts</li>
+                  </ul>
+                  <p className="mt-3 text-xs text-gray-500">
+                    Notifications update in real-time using Supabase subscriptions.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "admin" && userProfile?.role === "admin" && (
+          <AdminPanel user={user} />
+        )}
+
         {activeTab === "profile" && userProfile && (
           <ProfileSection
             user={user}
