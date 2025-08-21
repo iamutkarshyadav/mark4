@@ -31,7 +31,7 @@ export default function PostsList({
     fetchPosts();
   }, [type, searchQuery, refreshKey]);
 
-  const fetchPosts = async () => {
+  const fetchPosts = async (retryCount = 0) => {
     setLoading(true);
     setError("");
 
@@ -46,20 +46,33 @@ export default function PostsList({
         url = `/api/search/posts?query=${encodeURIComponent(searchQuery)}`;
       }
 
-      const headers: Record<string, string> = {};
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json'
+      };
       if (session?.access_token) {
         headers["Authorization"] = `Bearer ${session.access_token}`;
       }
 
       const response = await fetch(url, { headers });
-      const data = await response.json();
 
       if (response.ok) {
+        const data = await response.json();
         setPosts(data.posts || []);
       } else {
+        const data = await response.json().catch(() => ({ error: 'Unknown error' }));
+        console.error('Failed to fetch posts:', response.status, response.statusText);
+        if (retryCount < 2) {
+          setTimeout(() => fetchPosts(retryCount + 1), 1000);
+          return;
+        }
         setError(data.error || "Failed to fetch posts");
       }
     } catch (err) {
+      console.error('Network error fetching posts:', err);
+      if (retryCount < 2) {
+        setTimeout(() => fetchPosts(retryCount + 1), 1000);
+        return;
+      }
       setError("Network error. Please try again.");
     } finally {
       setLoading(false);
