@@ -11,6 +11,7 @@ import ProfileSection from "./ProfileSection";
 import SocialFeatures from "./SocialFeatures";
 import NotificationsComponent from "./NotificationsComponent";
 import AdminPanel from "./AdminPanel";
+import ErrorBoundary from "./ErrorBoundary";
 
 interface Props {
   user: User;
