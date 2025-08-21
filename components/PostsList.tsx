@@ -32,48 +32,26 @@ export default function PostsList({
     fetchPosts();
   }, [type, searchQuery, refreshKey]);
 
-  const fetchPosts = async (retryCount = 0) => {
+  const fetchPosts = async () => {
     setLoading(true);
     setError("");
 
     try {
-      // Get the current session for authorization
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
       let url = "/api/posts/feed";
       if (type === "search" && searchQuery) {
         url = `/api/search/posts?query=${encodeURIComponent(searchQuery)}`;
       }
 
-      const headers: Record<string, string> = {
-        'Content-Type': 'application/json'
-      };
-      if (session?.access_token) {
-        headers["Authorization"] = `Bearer ${session.access_token}`;
-      }
+      const { data, error } = await safeFetch(url);
 
-      const response = await fetch(url, { headers });
-
-      if (response.ok) {
-        const data = await response.json();
-        setPosts(data.posts || []);
+      if (error) {
+        console.error('Failed to fetch posts:', error);
+        setError(error);
       } else {
-        const data = await response.json().catch(() => ({ error: 'Unknown error' }));
-        console.error('Failed to fetch posts:', response.status, response.statusText);
-        if (retryCount < 2) {
-          setTimeout(() => fetchPosts(retryCount + 1), 1000);
-          return;
-        }
-        setError(data.error || "Failed to fetch posts");
+        setPosts(data.posts || []);
       }
     } catch (err) {
-      console.error('Network error fetching posts:', err);
-      if (retryCount < 2) {
-        setTimeout(() => fetchPosts(retryCount + 1), 1000);
-        return;
-      }
+      console.error('Unexpected error fetching posts:', err);
       setError("Network error. Please try again.");
     } finally {
       setLoading(false);
