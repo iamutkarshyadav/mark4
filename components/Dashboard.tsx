@@ -29,7 +29,7 @@ interface UserProfile {
 export default function Dashboard({ user }: Props) {
   const { signOut } = useAuth();
   const [activeTab, setActiveTab] = useState<
-    "feed" | "search" | "profile" | "social"
+    "feed" | "search" | "profile" | "social" | "notifications" | "admin"
   >("feed");
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
