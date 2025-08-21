@@ -266,6 +266,9 @@ export default function Dashboard({ user }: Props) {
               <PostsList type="feed" user={user} refreshKey={refreshKey} />
             </div>
             <div className="space-y-6">
+              <div className="bg-white rounded-xl shadow border border-gray-100 max-h-72 overflow-hidden">
+                <NotificationsComponent user={user} />
+              </div>
               <div className="bg-white rounded-xl shadow p-6 border border-gray-100">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold text-gray-900">Quick Stats</h3>
