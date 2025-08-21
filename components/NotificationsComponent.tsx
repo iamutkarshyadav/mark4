@@ -97,18 +97,11 @@ export default function NotificationsComponent({ user }: Props) {
 
   const markAsRead = async (notificationId: string) => {
     try {
-      const { data: session } = await supabase.auth.getSession();
-      if (!session.session) return;
-
-      const response = await fetch(`/api/notifications/${notificationId}/read`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${session.session.access_token}`,
-          'Content-Type': 'application/json'
-        }
+      const { error } = await safeFetch(`/api/notifications/${notificationId}/read`, {
+        method: 'POST'
       });
 
-      if (response.ok) {
+      if (!error) {
         setNotifications(prev =>
           prev.map(n =>
             n.id === notificationId ? { ...n, is_read: true } : n
@@ -116,7 +109,7 @@ export default function NotificationsComponent({ user }: Props) {
         );
         setUnreadCount(prev => Math.max(0, prev - 1));
       } else {
-        console.error('Failed to mark notification as read:', response.status);
+        console.error('Failed to mark notification as read:', error);
       }
     } catch (error) {
       console.error('Error marking notification as read:', error);
@@ -125,24 +118,17 @@ export default function NotificationsComponent({ user }: Props) {
 
   const markAllAsRead = async () => {
     try {
-      const { data: session } = await supabase.auth.getSession();
-      if (!session.session) return;
-
-      const response = await fetch('/api/notifications/mark-all-read', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${session.session.access_token}`,
-          'Content-Type': 'application/json'
-        }
+      const { error } = await safeFetch('/api/notifications/mark-all-read', {
+        method: 'POST'
       });
 
-      if (response.ok) {
+      if (!error) {
         setNotifications(prev =>
           prev.map(n => ({ ...n, is_read: true }))
         );
         setUnreadCount(0);
       } else {
-        console.error('Failed to mark all notifications as read:', response.status);
+        console.error('Failed to mark all notifications as read:', error);
       }
     } catch (error) {
       console.error('Error marking all notifications as read:', error);
