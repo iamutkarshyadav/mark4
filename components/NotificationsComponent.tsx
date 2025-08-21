@@ -62,24 +62,38 @@ export default function NotificationsComponent({ user }: Props) {
     };
   }, [user.id]);
 
-  const fetchNotifications = async () => {
+  const fetchNotifications = async (retryCount = 0) => {
     try {
       const { data: session } = await supabase.auth.getSession();
-      if (!session.session) return;
+      if (!session.session) {
+        setLoading(false);
+        return;
+      }
 
       const response = await fetch('/api/notifications', {
         headers: {
-          'Authorization': `Bearer ${session.session.access_token}`
+          'Authorization': `Bearer ${session.session.access_token}`,
+          'Content-Type': 'application/json'
         }
       });
 
       if (response.ok) {
         const data = await response.json();
-        setNotifications(data.notifications);
-        setUnreadCount(data.notifications.filter((n: Notification) => !n.is_read).length);
+        setNotifications(data.notifications || []);
+        setUnreadCount((data.notifications || []).filter((n: Notification) => !n.is_read).length);
+      } else {
+        console.error('Failed to fetch notifications:', response.status, response.statusText);
+        if (retryCount < 2) {
+          setTimeout(() => fetchNotifications(retryCount + 1), 1000);
+          return;
+        }
       }
     } catch (error) {
       console.error('Error fetching notifications:', error);
+      if (retryCount < 2) {
+        setTimeout(() => fetchNotifications(retryCount + 1), 1000);
+        return;
+      }
     } finally {
       setLoading(false);
     }
@@ -93,17 +107,20 @@ export default function NotificationsComponent({ user }: Props) {
       const response = await fetch(`/api/notifications/${notificationId}/read`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${session.session.access_token}`
+          'Authorization': `Bearer ${session.session.access_token}`,
+          'Content-Type': 'application/json'
         }
       });
 
       if (response.ok) {
-        setNotifications(prev => 
-          prev.map(n => 
+        setNotifications(prev =>
+          prev.map(n =>
             n.id === notificationId ? { ...n, is_read: true } : n
           )
         );
         setUnreadCount(prev => Math.max(0, prev - 1));
+      } else {
+        console.error('Failed to mark notification as read:', response.status);
       }
     } catch (error) {
       console.error('Error marking notification as read:', error);
@@ -118,15 +135,18 @@ export default function NotificationsComponent({ user }: Props) {
       const response = await fetch('/api/notifications/mark-all-read', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${session.session.access_token}`
+          'Authorization': `Bearer ${session.session.access_token}`,
+          'Content-Type': 'application/json'
         }
       });
 
       if (response.ok) {
-        setNotifications(prev => 
+        setNotifications(prev =>
           prev.map(n => ({ ...n, is_read: true }))
         );
         setUnreadCount(0);
+      } else {
+        console.error('Failed to mark all notifications as read:', response.status);
       }
     } catch (error) {
       console.error('Error marking all notifications as read:', error);
