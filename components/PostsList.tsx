@@ -62,26 +62,17 @@ export default function PostsList({
     if (!confirm("Are you sure you want to delete this post?")) return;
 
     try {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      const headers: Record<string, string> = {};
-      if (session?.access_token) {
-        headers["Authorization"] = `Bearer ${session.access_token}`;
-      }
-
-      const response = await fetch(`/api/posts/delete/${postId}`, {
-        method: "DELETE",
-        headers,
+      const { error } = await safeFetch(`/api/posts/delete/${postId}`, {
+        method: "DELETE"
       });
 
-      if (response.ok) {
+      if (!error) {
         setPosts(posts.filter((post) => post.id !== postId));
       } else {
-        const data = await response.json();
-        alert(`❌ ${data.error || "Failed to delete post"}`);
+        alert(`❌ ${error}`);
       }
     } catch (err) {
+      console.error('Error deleting post:', err);
       alert("❌ Network error. Please try again.");
     }
   };
