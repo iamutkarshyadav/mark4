@@ -284,29 +284,29 @@ export default function Dashboard({ user }: Props) {
                   </span>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                  <div className="rounded-lg bg-gray-50 p-4 text-center">
-                    <div className="text-xs uppercase tracking-wide text-gray-500">
-                      Posts
+                  <div className="rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 p-4 text-center hover:shadow-md transition-all cursor-pointer">
+                    <div className="text-xs uppercase tracking-wide text-blue-600 font-medium">
+                      📝 Posts
                     </div>
                     <div
-                      className={`mt-1 text-2xl font-bold ${
+                      className={`mt-2 text-2xl font-bold ${
                         statsLoading
                           ? "animate-pulse text-gray-400"
-                          : "text-gray-900"
+                          : "text-blue-700"
                       }`}
                     >
                       {statsLoading ? "—" : stats.posts}
                     </div>
                   </div>
-                  <div className="rounded-lg bg-gray-50 p-4 text-center">
-                    <div className="text-xs uppercase tracking-wide text-gray-500">
-                      Following
+                  <div className="rounded-xl bg-gradient-to-br from-green-50 to-green-100 p-4 text-center hover:shadow-md transition-all cursor-pointer">
+                    <div className="text-xs uppercase tracking-wide text-green-600 font-medium">
+                      👥 Following
                     </div>
                     <div
-                      className={`mt-1 text-2xl font-bold ${
+                      className={`mt-2 text-2xl font-bold ${
                         statsLoading
                           ? "animate-pulse text-gray-400"
-                          : "text-gray-900"
+                          : "text-green-700"
                       }`}
                     >
                       {statsLoading ? "—" : stats.following}
