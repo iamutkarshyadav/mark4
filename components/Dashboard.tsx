@@ -145,17 +145,18 @@ export default function Dashboard({ user }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/75 border-b sticky top-0 z-50">
+      <header className="bg-white/95 backdrop-blur-md supports-[backdrop-filter]:bg-white/90 border-b border-gray-200/50 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
-              <div className="text-lg font-semibold text-gray-900">
+              <div className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 SocialConnect
               </div>
-              <div className="hidden md:flex items-center text-xs text-green-700 bg-green-50 border border-green-100 px-2 py-0.5 rounded-full">
-                Backend Connected ✓
+              <div className="hidden md:flex items-center text-xs text-green-700 bg-green-50 border border-green-200 px-3 py-1 rounded-full shadow-sm">
+                <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                Connected
               </div>
             </div>
 
@@ -179,7 +180,7 @@ export default function Dashboard({ user }: Props) {
 
           {/* Navigation Tabs */}
           <nav className="mt-3">
-            <div className="inline-flex items-center gap-1 rounded-xl bg-gray-100 p-1">
+            <div className="inline-flex items-center gap-1 rounded-xl bg-white shadow-sm border border-gray-200 p-1">
               <button
                 onClick={() => setActiveTab("feed")}
                 className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
