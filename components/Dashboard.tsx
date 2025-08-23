@@ -312,43 +312,43 @@ export default function Dashboard({ user }: Props) {
                       {statsLoading ? "—" : stats.following}
                     </div>
                   </div>
-                  <div className="rounded-lg bg-gray-50 p-4 text-center">
-                    <div className="text-xs uppercase tracking-wide text-gray-500">
-                      Followers
+                  <div className="rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 p-4 text-center hover:shadow-md transition-all cursor-pointer">
+                    <div className="text-xs uppercase tracking-wide text-purple-600 font-medium">
+                      👍 Followers
                     </div>
                     <div
-                      className={`mt-1 text-2xl font-bold ${
+                      className={`mt-2 text-2xl font-bold ${
                         statsLoading
                           ? "animate-pulse text-gray-400"
-                          : "text-gray-900"
+                          : "text-purple-700"
                       }`}
                     >
                       {statsLoading ? "—" : stats.followers}
                     </div>
                   </div>
-                  <div className="rounded-lg bg-gray-50 p-4 text-center">
-                    <div className="text-xs uppercase tracking-wide text-gray-500">
-                      Likes Received
+                  <div className="rounded-xl bg-gradient-to-br from-orange-50 to-orange-100 p-4 text-center hover:shadow-md transition-all cursor-pointer">
+                    <div className="text-xs uppercase tracking-wide text-orange-600 font-medium">
+                      ❤️ Likes
                     </div>
                     <div
-                      className={`mt-1 text-2xl font-bold ${
+                      className={`mt-2 text-2xl font-bold ${
                         statsLoading
                           ? "animate-pulse text-gray-400"
-                          : "text-gray-900"
+                          : "text-orange-700"
                       }`}
                     >
                       {statsLoading ? "—" : stats.likesReceived}
                     </div>
                   </div>
-                  <div className="rounded-lg bg-gray-50 p-4 text-center">
-                    <div className="text-xs uppercase tracking-wide text-gray-500">
-                      Comments Received
+                  <div className="rounded-xl bg-gradient-to-br from-pink-50 to-pink-100 p-4 text-center hover:shadow-md transition-all cursor-pointer">
+                    <div className="text-xs uppercase tracking-wide text-pink-600 font-medium">
+                      💬 Comments
                     </div>
                     <div
-                      className={`mt-1 text-2xl font-bold ${
+                      className={`mt-2 text-2xl font-bold ${
                         statsLoading
                           ? "animate-pulse text-gray-400"
-                          : "text-gray-900"
+                          : "text-pink-700"
                       }`}
                     >
                       {statsLoading ? "—" : stats.commentsReceived}
