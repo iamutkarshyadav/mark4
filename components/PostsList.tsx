@@ -122,7 +122,7 @@ export default function PostsList({
 
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+      <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center shadow-sm">
         <div className="text-red-800 font-medium mb-2">❌ {error}</div>
         <button
           onClick={fetchPosts}
@@ -136,7 +136,7 @@ export default function PostsList({
 
   if (posts.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8 text-center">
+      <div className="bg-white rounded-xl shadow-lg p-8 text-center border border-gray-100">
         <div className="text-6xl mb-4">📝</div>
         <div className="text-gray-600 font-medium mb-2">
           {type === "search"
@@ -153,7 +153,7 @@ export default function PostsList({
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-xl shadow p-4">
+      <div className="bg-white rounded-xl shadow-lg p-4 border border-gray-100">
         <div className="text-sm text-gray-600 flex items-center justify-between">
           <span className="text-gray-700">📊 Found {posts.length} posts</span>
           <div className="flex items-center gap-2">
@@ -305,10 +305,10 @@ function PostCard({
   );
 
   return (
-    <div className="bg-white rounded-xl shadow p-6 hover:shadow-lg transition-shadow">
+    <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all border border-gray-100 hover:border-gray-200">
       <div className="flex justify-between items-start mb-4">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold shadow-sm">
+          <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold shadow-md border-2 border-white">
             {(post.author?.username || "?").charAt(0).toUpperCase()}
           </div>
           <div>
