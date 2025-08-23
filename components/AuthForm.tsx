@@ -169,7 +169,7 @@ export default function AuthForm() {
                 value={formData.username}
                 onChange={handleChange}
                 placeholder="Choose a unique username"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white text-gray-900 placeholder-gray-500"
                 required={!isLogin}
               />
             </div>
@@ -184,8 +184,8 @@ export default function AuthForm() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Enter your email"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              placeholder="Enter your email address"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white text-gray-900 placeholder-gray-500"
               required
             />
           </div>
@@ -199,8 +199,8 @@ export default function AuthForm() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder={isLogin ? "Enter your password" : "Create a strong password"}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              placeholder={isLogin ? "Enter your password" : "Create a strong password (min 6 chars)"}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white text-gray-900 placeholder-gray-500"
               required
             />
             {!isLogin && (
