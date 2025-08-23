@@ -116,12 +116,6 @@ export default function PostsList({
       <div className="bg-white rounded-lg shadow-md p-8 text-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
         <div className="text-gray-600">Loading posts...</div>
-        <div className="mt-3 inline-flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-          <span>📡</span>
-          <span>
-            {type === "search" ? "/api/search/posts" : "/api/posts/feed"}
-          </span>
-        </div>
       </div>
     );
   }
@@ -175,11 +169,9 @@ export default function PostsList({
                 {posts.reduce((a, p) => a + (p.comment_count || 0), 0)} comments
               </span>
             </span>
-            <span className="inline-flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-              <span>📡</span>
-              <span>
-                {type === "search" ? "/api/search/posts" : "/api/posts/feed"}
-              </span>
+            <span className="inline-flex items-center gap-1 text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">
+              <span>✨</span>
+              <span>Real-time</span>
             </span>
           </div>
         </div>
@@ -425,19 +417,11 @@ function PostCard({
               Post
             </button>
           </div>
-          <div className="mt-2 inline-flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-            <span>📡</span>
-            <span>/api/comments/create</span>
-          </div>
         </form>
       )}
 
       {showComments && (
         <div className="mt-4 pt-4 border-t border-gray-100">
-          <div className="mb-3 inline-flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-            <span>📡</span>
-            <span>/api/comments/post/{post.id}</span>
-          </div>
           {comments.length === 0 ? (
             <p className="text-gray-500 text-sm">
               No comments yet. Be the first to comment!
