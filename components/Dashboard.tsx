@@ -275,12 +275,15 @@ export default function Dashboard({ user }: Props) {
                   <NotificationsComponent user={user} />
                 </div>
               </ErrorBoundary>
-              <div className="bg-white rounded-xl shadow p-6 border border-gray-100">
+              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold text-gray-900">Quick Stats</h3>
-                  <span className="text-xs text-gray-500">Live</span>
+                  <span className="inline-flex items-center gap-1 text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                    Live
+                  </span>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                   <div className="rounded-lg bg-gray-50 p-4 text-center">
                     <div className="text-xs uppercase tracking-wide text-gray-500">
                       Posts
