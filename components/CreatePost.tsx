@@ -114,7 +114,7 @@ export default function CreatePost({ user, onPostCreated }: Props) {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Share your thoughts, ideas, or experiences..."
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-all"
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-all bg-white text-gray-900 placeholder-gray-500"
             rows={4}
             maxLength={1000}
             required
@@ -146,8 +146,8 @@ export default function CreatePost({ user, onPostCreated }: Props) {
             type="text"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            placeholder="general | announcement | question"
-            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            placeholder="e.g., general, announcement, question"
+            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white text-gray-900 placeholder-gray-500"
           />
         </div>
 
