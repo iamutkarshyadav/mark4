@@ -113,7 +113,7 @@ export default function PostsList({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8 text-center">
+      <div className="bg-white rounded-xl shadow-lg p-8 text-center border border-gray-100">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
         <div className="text-gray-600">Loading posts...</div>
       </div>
