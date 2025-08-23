@@ -69,11 +69,11 @@ export default function PostsList({
       if (!error) {
         setPosts(posts.filter((post) => post.id !== postId));
       } else {
-        alert(`❌ ${error}`);
+        alert(`Error: ${error}`);
       }
     } catch (err) {
       console.error('Error deleting post:', err);
-      alert("❌ Network error. Please try again.");
+      alert("Network error. Please try again.");
     }
   };
 
@@ -104,24 +104,18 @@ export default function PostsList({
         fetchPosts(); // Refresh posts to show new comment count
       } else {
         const data = await response.json();
-        alert(`❌ ${data.error || "Failed to add comment"}`);
+        alert(`Error: ${data.error || "Failed to add comment"}`);
       }
     } catch (err) {
-      alert("❌ Network error. Please try again.");
+      alert("Network error. Please try again.");
     }
   };
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8 text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+      <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
+        <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
         <div className="text-gray-600">Loading posts...</div>
-        <div className="mt-3 inline-flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-          <span>📡</span>
-          <span>
-            {type === "search" ? "/api/search/posts" : "/api/posts/feed"}
-          </span>
-        </div>
       </div>
     );
   }
@@ -129,7 +123,7 @@ export default function PostsList({
   if (error) {
     return (
       <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-        <div className="text-red-800 font-medium mb-2">❌ {error}</div>
+        <div className="text-red-700 font-medium mb-2">Error: {error}</div>
         <button
           onClick={fetchPosts}
           className="text-red-600 hover:text-red-800 underline text-sm"
@@ -142,8 +136,8 @@ export default function PostsList({
 
   if (posts.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8 text-center">
-        <div className="text-6xl mb-4">📝</div>
+      <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
+        <div className="text-4xl mb-4">📝</div>
         <div className="text-gray-600 font-medium mb-2">
           {type === "search"
             ? "No posts found for your search."
@@ -158,29 +152,13 @@ export default function PostsList({
   }
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-xl shadow p-4">
+    <div className="space-y-4">
+      <div className="bg-white rounded-lg border border-gray-200 p-4">
         <div className="text-sm text-gray-600 flex items-center justify-between">
-          <span className="text-gray-700">📊 Found {posts.length} posts</span>
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-              <span>❤️</span>
-              <span>
-                {posts.reduce((a, p) => a + (p.like_count || 0), 0)} likes
-              </span>
-            </span>
-            <span className="inline-flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-              <span>💬</span>
-              <span>
-                {posts.reduce((a, p) => a + (p.comment_count || 0), 0)} comments
-              </span>
-            </span>
-            <span className="inline-flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-              <span>📡</span>
-              <span>
-                {type === "search" ? "/api/search/posts" : "/api/posts/feed"}
-              </span>
-            </span>
+          <span>Found {posts.length} posts</span>
+          <div className="flex items-center space-x-4 text-xs text-gray-500">
+            <span>{posts.reduce((a, p) => a + (p.like_count || 0), 0)} likes</span>
+            <span>{posts.reduce((a, p) => a + (p.comment_count || 0), 0)} comments</span>
           </div>
         </div>
       </div>
@@ -235,7 +213,6 @@ function PostCard({
 
     setLoadingComments(true);
     try {
-      // Get the current session for authorization
       const {
         data: { session },
       } = await supabase.auth.getSession();
@@ -313,14 +290,14 @@ function PostCard({
   );
 
   return (
-    <div className="bg-white rounded-xl shadow p-6 hover:shadow-lg transition-shadow">
+    <div className="bg-white rounded-lg border border-gray-200 p-6">
       <div className="flex justify-between items-start mb-4">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold shadow-sm">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
             {(post.author?.username || "?").charAt(0).toUpperCase()}
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900">
+            <h3 className="font-medium text-gray-900">
               {post.author?.username || "Unknown"}
             </h3>
             <p className="text-sm text-gray-500">
@@ -337,15 +314,14 @@ function PostCard({
         {canDelete && (
           <button
             onClick={() => onDelete(post.id)}
-            className="text-gray-400 hover:text-red-600 rounded-full p-2 hover:bg-red-50 transition-colors"
+            className="text-gray-400 hover:text-red-600 p-1"
             aria-label="Delete post"
-            title="Delete"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="h-5 w-5"
+              className="h-4 w-4"
             >
               <path d="M9 3a1 1 0 0 0-1 1v1H5.5a.75.75 0 0 0 0 1.5h13a.75.75 0 0 0 0-1.5H16V4a1 1 0 0 0-1-1H9Zm1 5.25a.75.75 0 0 0-1.5 0v9a.75.75 0 0 0 1.5 0v-9Zm4.5 0a.75.75 0 0 0-1.5 0v9a.75.75 0 0 0 1.5 0v-9Z" />
               <path d="M6.5 7.5h11l-.745 11.175A2.25 2.25 0 0 1 14.513 21h-5.026a2.25 2.25 0 0 1-2.242-2.325L6.5 7.5Z" />
@@ -362,44 +338,45 @@ function PostCard({
           <img
             src={post.image_url}
             alt="Post image"
-            className="mt-3 rounded-lg border border-gray-100 max-h-80 object-contain w-full"
+            className="mt-3 rounded-lg border border-gray-200 max-h-80 object-contain w-full"
             loading="lazy"
           />
         )}
         {post.category && (
-          <span className="inline-block mt-3 px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">
-            #{post.category}
+          <span className="inline-block mt-3 px-2 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
+            {post.category}
           </span>
         )}
       </div>
 
-      <div className="flex items-center gap-6 pt-4 border-t border-gray-100">
+      <div className="flex items-center space-x-6 pt-4 border-t border-gray-100">
         <button
           onClick={toggleLike}
           disabled={liking}
-          className={`flex items-center gap-2 text-sm ${
+          className={`flex items-center space-x-1 text-sm ${
             liked ? "text-red-600" : "text-gray-600 hover:text-red-600"
           } transition-colors`}
         >
-          {liked ? "❤️" : "🤍"} {likeCount}
+          <span>{liked ? "♥" : "♡"}</span>
+          <span>{likeCount}</span>
         </button>
         <button
           onClick={fetchComments}
-          className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors"
+          className="flex items-center space-x-1 text-sm text-gray-600 hover:text-blue-600 transition-colors"
           disabled={loadingComments}
         >
           {loadingComments ? (
-            <div className="w-4 h-4 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600"></div>
+            <div className="w-4 h-4 border border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
           ) : (
             <span>💬</span>
           )}
-          {post.comment_count ?? post.comments?.[0]?.count ?? 0} comments
+          <span>{post.comment_count ?? post.comments?.[0]?.count ?? 0}</span>
         </button>
         <button
           onClick={() => setShowCommentForm(!showCommentForm)}
-          className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 transition-colors"
+          className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
         >
-          ✍️ Add Comment
+          Reply
         </button>
       </div>
 
@@ -408,13 +385,13 @@ function PostCard({
           onSubmit={handleCommentSubmit}
           className="mt-4 pt-4 border-t border-gray-100"
         >
-          <div className="flex gap-2">
+          <div className="flex space-x-3">
             <input
               type="text"
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
-              placeholder="Write a thoughtful comment..."
-              className="flex-1 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Write a comment..."
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
               maxLength={500}
               required
             />
@@ -425,19 +402,11 @@ function PostCard({
               Post
             </button>
           </div>
-          <div className="mt-2 inline-flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-            <span>📡</span>
-            <span>/api/comments/create</span>
-          </div>
         </form>
       )}
 
       {showComments && (
         <div className="mt-4 pt-4 border-t border-gray-100">
-          <div className="mb-3 inline-flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-            <span>📡</span>
-            <span>/api/comments/post/{post.id}</span>
-          </div>
           {comments.length === 0 ? (
             <p className="text-gray-500 text-sm">
               No comments yet. Be the first to comment!
@@ -446,7 +415,7 @@ function PostCard({
             <div className="space-y-3">
               {comments.map((comment: any) => (
                 <div key={comment.id} className="bg-gray-50 rounded-lg p-3">
-                  <div className="flex items-center gap-2 mb-1">
+                  <div className="flex items-center space-x-2 mb-1">
                     <span className="font-medium text-sm">
                       {comment.author?.username}
                     </span>
