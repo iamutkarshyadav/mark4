@@ -138,115 +138,112 @@ export default function Dashboard({ user }: Props) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl">Loading profile...</div>
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="text-gray-600">Loading...</div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
-      {/* Header */}
-      <header className="bg-white/95 backdrop-blur-md supports-[backdrop-filter]:bg-white/90 border-b border-gray-200/50 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-3">
+    <div className="min-h-screen bg-gray-50">
+      {/* Clean Header */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <div className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <div className="flex items-center space-x-4">
+              <h1 className="text-xl font-semibold text-gray-900">
                 SocialConnect
-              </div>
-              <div className="hidden md:flex items-center text-xs text-green-700 bg-green-50 border border-green-200 px-3 py-1 rounded-full shadow-sm">
-                <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                Connected
+              </h1>
+              <div className="hidden md:flex items-center text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full border border-green-200">
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
+                Online
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center space-x-4">
               <div className="text-right">
                 <div className="text-sm font-medium text-gray-900">
                   {userProfile?.username || "Loading..."}
                 </div>
                 <div className="text-xs text-gray-500">
-                  {userProfile?.role === "admin" ? "👑 Admin" : "👤 User"}
+                  {userProfile?.role === "admin" ? "Admin" : "User"}
                 </div>
               </div>
               <button
                 onClick={handleLogout}
-                className="text-sm bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                className="text-sm bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
               >
-                Logout
+                Sign out
               </button>
             </div>
           </div>
 
-          {/* Navigation Tabs */}
-          <nav className="mt-3">
-            <div className="inline-flex items-center gap-1 rounded-xl bg-white shadow-sm border border-gray-200 p-1">
+          {/* Clean Navigation */}
+          <nav className="mt-6">
+            <div className="flex space-x-1 border-b border-gray-200">
               <button
                 onClick={() => setActiveTab("feed")}
-                className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === "feed"
-                    ? "bg-white text-gray-900 shadow"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 }`}
-                title="Feed"
               >
-                📰 <span className="ml-1 hidden sm:inline">Feed</span>
+                Feed
               </button>
               <button
                 onClick={() => setActiveTab("search")}
-                className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === "search"
-                    ? "bg-white text-gray-900 shadow"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 }`}
-                title="Search"
               >
-                🔍{" "}
+                Search
               </button>
               <button
                 onClick={() => setActiveTab("social")}
-                className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === "social"
-                    ? "bg-white text-gray-900 shadow"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 }`}
-                title="Social"
               >
-                👥 <span className="ml-1 hidden sm:inline">Social</span>
+                Social
               </button>
               <button
                 onClick={() => setActiveTab("notifications")}
-                className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === "notifications"
-                    ? "bg-white text-gray-900 shadow"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 }`}
-                title="Notifications"
               >
-                🔔 <span className="ml-1 hidden sm:inline">Notifications</span>
+                Notifications
               </button>
               <button
                 onClick={() => setActiveTab("profile")}
-                className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === "profile"
-                    ? "bg-white text-gray-900 shadow"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 }`}
-                title="Profile"
               >
-                ⚙️ <span className="ml-1 hidden sm:inline">Profile</span>
+                Profile
               </button>
               {userProfile?.role === "admin" && (
                 <button
                   onClick={() => setActiveTab("admin")}
-                  className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                  className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                     activeTab === "admin"
-                      ? "bg-white text-gray-900 shadow"
-                      : "text-gray-600 hover:text-gray-900"
+                      ? "border-blue-600 text-blue-600"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
-                  title="Admin"
                 >
-                  👑 <span className="ml-1 hidden sm:inline">Admin</span>
+                  Admin
                 </button>
               )}
             </div>
@@ -255,10 +252,10 @@ export default function Dashboard({ user }: Props) {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main className="max-w-6xl mx-auto px-6 py-8">
         {activeTab === "feed" && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <div className="lg:col-span-3 space-y-6">
               <CreatePost
                 user={user}
                 onPostCreated={() => {
@@ -271,84 +268,83 @@ export default function Dashboard({ user }: Props) {
             </div>
             <div className="space-y-6">
               <ErrorBoundary>
-                <div className="bg-white rounded-xl shadow border border-gray-100 max-h-72 overflow-hidden">
+                <div className="bg-white rounded-lg border border-gray-200 max-h-80 overflow-hidden">
                   <NotificationsComponent user={user} />
                 </div>
               </ErrorBoundary>
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-gray-900">Quick Stats</h3>
-                  <span className="inline-flex items-center gap-1 text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">
-                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="font-semibold text-gray-900">Stats</h3>
+                  <div className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">
                     Live
-                  </span>
+                  </div>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                  <div className="rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 p-4 text-center hover:shadow-md transition-all cursor-pointer">
-                    <div className="text-xs uppercase tracking-wide text-blue-600 font-medium">
-                      📝 Posts
+                <div className="grid grid-cols-1 gap-4">
+                  <div className="text-center p-4 border border-gray-100 rounded-lg">
+                    <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">
+                      Posts
                     </div>
                     <div
-                      className={`mt-2 text-2xl font-bold ${
+                      className={`text-2xl font-semibold ${
                         statsLoading
                           ? "animate-pulse text-gray-400"
-                          : "text-blue-700"
+                          : "text-gray-900"
                       }`}
                     >
                       {statsLoading ? "—" : stats.posts}
                     </div>
                   </div>
-                  <div className="rounded-xl bg-gradient-to-br from-green-50 to-green-100 p-4 text-center hover:shadow-md transition-all cursor-pointer">
-                    <div className="text-xs uppercase tracking-wide text-green-600 font-medium">
-                      👥 Following
+                  <div className="text-center p-4 border border-gray-100 rounded-lg">
+                    <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">
+                      Following
                     </div>
                     <div
-                      className={`mt-2 text-2xl font-bold ${
+                      className={`text-2xl font-semibold ${
                         statsLoading
                           ? "animate-pulse text-gray-400"
-                          : "text-green-700"
+                          : "text-gray-900"
                       }`}
                     >
                       {statsLoading ? "—" : stats.following}
                     </div>
                   </div>
-                  <div className="rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 p-4 text-center hover:shadow-md transition-all cursor-pointer">
-                    <div className="text-xs uppercase tracking-wide text-purple-600 font-medium">
-                      👍 Followers
+                  <div className="text-center p-4 border border-gray-100 rounded-lg">
+                    <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">
+                      Followers
                     </div>
                     <div
-                      className={`mt-2 text-2xl font-bold ${
+                      className={`text-2xl font-semibold ${
                         statsLoading
                           ? "animate-pulse text-gray-400"
-                          : "text-purple-700"
+                          : "text-gray-900"
                       }`}
                     >
                       {statsLoading ? "—" : stats.followers}
                     </div>
                   </div>
-                  <div className="rounded-xl bg-gradient-to-br from-orange-50 to-orange-100 p-4 text-center hover:shadow-md transition-all cursor-pointer">
-                    <div className="text-xs uppercase tracking-wide text-orange-600 font-medium">
-                      ❤️ Likes
+                  <div className="text-center p-4 border border-gray-100 rounded-lg">
+                    <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">
+                      Likes
                     </div>
                     <div
-                      className={`mt-2 text-2xl font-bold ${
+                      className={`text-2xl font-semibold ${
                         statsLoading
                           ? "animate-pulse text-gray-400"
-                          : "text-orange-700"
+                          : "text-gray-900"
                       }`}
                     >
                       {statsLoading ? "—" : stats.likesReceived}
                     </div>
                   </div>
-                  <div className="rounded-xl bg-gradient-to-br from-pink-50 to-pink-100 p-4 text-center hover:shadow-md transition-all cursor-pointer">
-                    <div className="text-xs uppercase tracking-wide text-pink-600 font-medium">
-                      💬 Comments
+                  <div className="text-center p-4 border border-gray-100 rounded-lg">
+                    <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">
+                      Comments
                     </div>
                     <div
-                      className={`mt-2 text-2xl font-bold ${
+                      className={`text-2xl font-semibold ${
                         statsLoading
                           ? "animate-pulse text-gray-400"
-                          : "text-pink-700"
+                          : "text-gray-900"
                       }`}
                     >
                       {statsLoading ? "—" : stats.commentsReceived}
@@ -365,23 +361,20 @@ export default function Dashboard({ user }: Props) {
         {activeTab === "social" && <SocialFeatures user={user} />}
 
         {activeTab === "notifications" && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <NotificationsComponent user={user} />
             </div>
             <div className="space-y-6">
-              <div className="bg-white rounded-xl shadow p-6 border border-gray-100">
-                <h3 className="font-semibold text-gray-900 mb-4">About Notifications</h3>
-                <div className="text-sm text-gray-600 space-y-2">
-                  <p>🔔 Get real-time notifications for:</p>
-                  <ul className="list-disc list-inside space-y-1 ml-2">
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <h3 className="font-semibold text-gray-900 mb-4">About</h3>
+                <div className="text-sm text-gray-600 space-y-3">
+                  <p>Real-time notifications for:</p>
+                  <ul className="list-disc list-inside space-y-1 ml-2 text-gray-500">
                     <li>New followers</li>
                     <li>Likes on your posts</li>
                     <li>Comments on your posts</li>
                   </ul>
-                  <p className="mt-3 text-xs text-gray-500">
-                    Notifications update in real-time using Supabase subscriptions.
-                  </p>
                 </div>
               </div>
             </div>
