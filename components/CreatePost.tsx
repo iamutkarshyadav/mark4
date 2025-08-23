@@ -90,9 +90,9 @@ export default function CreatePost({ user, onPostCreated }: Props) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow p-6">
+    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all">
       <div className="flex items-center space-x-3 mb-4">
-        <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold shadow-sm">
+        <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold shadow-md border-2 border-white">
           {user.email?.charAt(0).toUpperCase()}
         </div>
         <div>
