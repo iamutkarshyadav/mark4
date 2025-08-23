@@ -165,7 +165,7 @@ export default function CreatePost({ user, onPostCreated }: Props) {
             className="block w-full text-sm text-gray-600"
           />
           <div className="text-xs text-gray-500 mt-1">
-            Upload handled by a separate step (API not yet wired here)
+            Supported formats: JPEG, PNG (max 2MB)
           </div>
         </div>
 
@@ -181,11 +181,7 @@ export default function CreatePost({ user, onPostCreated }: Props) {
           </div>
         )}
 
-        <div className="flex justify-between items-center pt-4 border-t">
-          <div className="inline-flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-            <span>📡</span>
-            <span>/api/posts/create</span>
-          </div>
+        <div className="flex justify-end items-center pt-4 border-t">
           <button
             type="submit"
             disabled={loading || !content.trim()}
