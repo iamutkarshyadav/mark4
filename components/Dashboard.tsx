@@ -201,7 +201,7 @@ export default function Dashboard({ user }: Props) {
                 }`}
                 title="Search"
               >
-                🔍 <span className="ml-1 hidden sm:inline">Search</span>
+                🔍{" "}
               </button>
               <button
                 onClick={() => setActiveTab("social")}
